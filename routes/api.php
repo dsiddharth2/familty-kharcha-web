@@ -12,7 +12,4 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::get('register', function() {
-    return "Hello World";
-});
+Route::post('register', 'RegisterController@registerNewUser');
