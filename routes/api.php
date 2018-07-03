@@ -13,3 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 Route::post('register', 'RegisterController@registerNewUser');
+Route::post('test', 'RegisterController@test');

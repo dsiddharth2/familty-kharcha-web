@@ -7,6 +7,8 @@ use App\Family;
 use App\User;
 use App\UserFamily;
 use \Firebase\JWT\JWT;
+use Exception;
+use DB;
 
 class RegisterController extends Controller {
     
@@ -23,6 +25,7 @@ class RegisterController extends Controller {
         $familyString   = trim($request->input('familyString'));
         $type           = trim($request->input('type'));
 
+        DB::beginTransaction();
         try {
             $user = User::where('userEmail', '=', $email)->first();
             if ($user !== null) {
@@ -88,6 +91,8 @@ class RegisterController extends Controller {
                 throw new Exception("Type is mismatch", 2);
             }
 
+            DB::commit();
+
             $responseArray = array(
                 'status'    =>  true,
                 'token'     =>  $token,
@@ -95,12 +100,19 @@ class RegisterController extends Controller {
             );            
 
         } catch(Exception $e){
+            
+            DB::rollback();
+
             $responseArray = array(
                 'status'    =>  false,
                 'reason'    =>  $e->getMessage()
             );
         }
-
         return $responseArray;
+       
+    }
+
+    public function test(Request $request) {
+        echo "Testing";
     }
 }
