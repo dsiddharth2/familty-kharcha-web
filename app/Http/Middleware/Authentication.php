@@ -33,6 +33,12 @@ class Authentication
             if ($user === null) {
                 throw new Exception("Invalid Token", 103);
             }
+
+            $data = array(
+                "user_id"       =>  $user->id,
+                "displayName"   =>  $user->displayName,                
+            );            
+            $request->merge($data);
             
             return $next($request);
         } catch (Exception $e) {

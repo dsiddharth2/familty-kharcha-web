@@ -28,7 +28,7 @@ Route::post('login', 'LoginController@checkLogin');
 |--------------------------------------------------------------------------
 |
 */
-Route::group(['middleware' => ['api']], function () {
+Route::group(['middleware' => ['custom_api']], function () {
     Route::post('add', 'ExpenseController@addExpense');
 });
 
