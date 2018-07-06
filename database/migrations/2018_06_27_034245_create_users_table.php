@@ -18,8 +18,10 @@ class CreateUsersTable extends Migration
             $table->string('userSlack', 40);
             $table->string('fullName');
             $table->string('userEmail');
-            $table->string('displayName');
-            $table->longText('token')->nullable();
+            $table->string('password');
+            $table->string('salt');
+            $table->string('displayName');            
+            $table->longText('token')->nullable();                        
             $table->timestamps();
         });
     }

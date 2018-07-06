@@ -23,7 +23,9 @@ class RegisterController extends Controller {
         $fullName       = trim($request->input('fullName'));
         $displayName    = trim($request->input('displayName'));
         $familyString   = trim($request->input('familyString'));
+        $password       = trim($request->input('password'));
         $type           = trim($request->input('type'));
+        $salt           = str_random(5);
 
         DB::beginTransaction();
         try {
@@ -37,6 +39,8 @@ class RegisterController extends Controller {
             $user->userEmail    = $email;
             $user->userSlack    = uniqid();
             $user->fullName     = $fullName;
+            $user->password     = md5($password . $salt);
+            $user->salt         = $salt;
             $user->displayName  = $displayName;            
             $user->save();
 
