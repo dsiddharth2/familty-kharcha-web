@@ -30,6 +30,7 @@ Route::post('login', 'LoginController@checkLogin');
 */
 Route::group(['middleware' => ['custom_api']], function () {
     Route::post('add', 'ExpenseController@addExpense');
+    Route::post('getExpense', 'ExpenseController@getFamilyExpenses');
 });
 
 /*

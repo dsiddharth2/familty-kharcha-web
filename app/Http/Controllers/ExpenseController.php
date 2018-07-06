@@ -58,4 +58,50 @@ class ExpenseController extends Controller {
 
         return $arrayresponse;
     }
+
+    /**
+     * Function that wll get all the family expenses
+     * @return [type] [description]
+     */
+    public function getFamilyExpenses(Request $request) {
+        $arrayresponse = array();
+        
+        try {
+            $content = json_decode($request->getContent(), true);
+            $familySlack = $content['familySlack'];
+
+            $family = Family::where('familySlack', '=', $familySlack)->first();
+            if($family == null) {
+                throw new Exception("Family Not found to get all expenses", 104);
+            }
+
+            $expenses = Expense::where('family_id', '=', $family->id)
+                                ->orderBy('expense_date', 'desc')
+                                ->get()
+                                ->toArray();
+
+            $arrayresponse = array(
+                'status'    =>  true,
+                'data'      =>  $expenses
+            );
+
+        } catch(Exception $e) {
+            $arrayresponse = array(
+                'status'    =>  false,
+                'message'   =>  $e->getMessage(),
+                'code'      =>  $e->getCode()
+            );
+        }
+
+        return $arrayresponse;
+    }
 }
+
+
+
+
+
+
+
+
+
