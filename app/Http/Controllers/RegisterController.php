@@ -98,9 +98,10 @@ class RegisterController extends Controller {
             DB::commit();
 
             $responseArray = array(
-                'status'    =>  true,
-                'token'     =>  $token,
-                'reason'    =>  'Registration Successful',
+                'status'        =>  true,
+                'token'         =>  $token,
+                'familySlack'   =>  $family->familySlack,
+                'reason'        =>  'Registration Successful',
             );            
 
         } catch(Exception $e){
@@ -109,7 +110,7 @@ class RegisterController extends Controller {
 
             $responseArray = array(
                 'status'    =>  false,
-                'reason'    =>  $e->getMessage()
+                'reason'    =>  $e->getMessage(),
             );
         }
         return $responseArray;
