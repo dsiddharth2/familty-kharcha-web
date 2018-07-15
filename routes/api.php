@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 */
 Route::post('register', 'RegisterController@registerNewUser');
 Route::post('login', 'LoginController@checkLogin');
+Route::post('check', 'LoginController@checkUser');
 
 /*
 |--------------------------------------------------------------------------

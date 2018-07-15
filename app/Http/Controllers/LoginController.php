@@ -10,6 +10,45 @@ use \Firebase\JWT\JWT;
 class LoginController extends Controller {
 
     /**
+     * Show login Screen
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function showLoginScreen(Request $request) {
+        return view('welcome');
+    }
+
+    /**
+     * API function to check the user for logging in
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function checkUser(Request $request) {
+        $responseArray  = array();
+        $email          = trim($request->input('email'));
+
+        try {
+            
+            $user = User::where('userEmail', '=', $email)->first();
+            if ($user === null) {
+                throw new Exception("User not found", 1);
+            }
+
+            $responseArray = array(
+                'status'    =>  true,
+                'reason'    =>  'User Found',
+            );             
+        } catch(Exception $e){
+            $responseArray = array(
+                'status'    =>  false,
+                'reason'    =>  $e->getMessage()
+            );
+        }
+
+        return $responseArray;
+    }
+
+    /**
      * Function that logins into the app using a password
      * @param  Request $request [description]
      * @return [type]           [description]
